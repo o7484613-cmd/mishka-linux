@@ -3,96 +3,262 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mishka-Linux Download</title>
+<title>Mishka-Linux Download & Support</title>
+<link href="https://fonts.googleapis.com/css2?family=Cantarell:wght@400;700&display=swap" rel="stylesheet">
 <style>
-    body {
-        font-family: "Cantarell", sans-serif;
-        margin: 0;
-        background: url('bear.jpeg') no-repeat center center fixed;
-        background-size: cover;
-        color: #eee;
-        text-align: center;
-    }
-    header {
-        background-color: rgba(0,0,0,0.7);
-        padding: 2rem;
-    }
-    header h1 {
-        font-size: 3rem;
-        margin: 0;
-    }
-    header p {
-        font-size: 1.2rem;
-        color: #ccc;
-    }
-    main {
-        padding: 2rem;
-        background-color: rgba(0,0,0,0.6);
-        margin: 2rem auto;
-        max-width: 600px;
-        border-radius: 10px;
-    }
-    a.btn {
-        display: inline-block;
-        margin: 1rem 0;
-        padding: 1rem 2rem;
-        background-color: #4caf50;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 1.2rem;
-    }
-    a.btn:hover {
-        background-color: #45a049;
-    }
-    footer {
-        margin-top: 2rem;
-        padding: 1rem;
-        background-color: rgba(0,0,0,0.7);
-        color: #aaa;
-    }
-    code {
-        display: block;
-        background: #222;
-        padding: 0.5rem;
-        border-radius: 5px;
-        margin: 0.5rem 0;
-        word-break: break-all;
-    }
-    ul {
-        text-align: left;
-    }
+:root { --accent:#4caf50; --bg-dark:rgba(0,0,0,0.7); --glass:rgba(0,0,0,0.55); --light:#eee; --text-muted:#ccc; }
+*{box-sizing:border-box;}
+body{font-family:"Cantarell",sans-serif;margin:0;background:#111;color:var(--light);transition:background-color 0.5s,color 0.5s;scroll-behavior:smooth;}
+nav{position:sticky;top:0;background:var(--bg-dark);display:flex;justify-content:center;gap:2rem;padding:0.8rem;z-index:10;box-shadow:0 2px 10px rgba(0,0,0,0.5);}
+nav a{color:var(--light);text-decoration:none;font-weight:bold;transition:color 0.3s;}
+nav a:hover{color:var(--accent);}
+header{padding:2rem 1rem;text-align:center;}
+header h1{font-size:3rem;margin:0;}
+header p{color:var(--text-muted);}
+main{max-width:800px;margin:2rem auto;background:var(--glass);padding:2rem;border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,0.5);}
+a.btn, button.btn{display:inline-block;margin:1rem 0;padding:1rem 2rem;background:var(--accent);color:#fff;border:none;border-radius:50px;font-weight:bold;font-size:1.1rem;cursor:pointer;text-decoration:none;transition:all 0.3s;}
+a.btn:hover, button.btn:hover{background:#3e9144;transform:scale(1.05);}
+section{margin-top:2rem;text-align:left;}
+section h3{border-bottom:2px solid var(--accent);padding-bottom:0.5rem;}
+details{background:rgba(255,255,255,0.05);border-radius:8px;margin-top:1rem;padding:0.5rem 1rem;}
+details summary{cursor:pointer;font-weight:bold;}
+#newsletter, #support-form{margin-top:2rem;background:rgba(255,255,255,0.08);padding:1rem;border-radius:10px;text-align:center;}
+#newsletter input, #support-form input, #support-form textarea{padding:0.6rem;border-radius:5px;border:none;margin-bottom:0.5rem;width:100%;font-family:inherit;}
+#newsletter button, #support-form button{padding:0.6rem 1rem;}
+#back-to-top{position:fixed;right:1rem;bottom:1rem;display:none;padding:0.6rem 1rem;border-radius:50px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-weight:bold;box-shadow:0 0 10px rgba(0,0,0,0.3);}
+#back-to-top.show{display:block;}
+footer{text-align:center;padding:1rem;background-color:rgba(0,0,0,0.8);color:#aaa;font-size:0.9rem;}
+body.light{background:#f5f5f5;color:#222;}
+body.light nav, body.light footer{background:rgba(255,255,255,0.8);}
+body.light main{background:rgba(255,255,255,0.9);}
+body.light a.btn, body.light button.btn{background:#4caf50;}
+.fade{opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s;}
+.fade.show{opacity:1;transform:translateY(0);}
+#terminal{background:#000;color:#0f0;font-family:monospace;padding:1rem;border-radius:10px;height:300px;overflow-y:auto;}
+#terminal input{width:100%;background:transparent;border:none;color:#0f0;font-family:monospace;outline:none;}
+.terminal-line{display:flex;}
+.terminal-prompt{margin-right:0.5rem;}
 </style>
 </head>
 <body>
+
+<nav>
+  <a href="#download">Download</a>
+  <a href="#requirements">Requirements</a>
+  <a href="#changelog">Changelog</a>
+  <a href="#faq">FAQ</a>
+  <a href="#newsletter">Newsletter</a>
+  <a href="#support">Support</a>
+</nav>
+
 <header>
-    <h1>Mishka-Linux</h1>
-    <p>Custom Ubuntu-based live ISO with GNOME, Wine, Flatpak, and Firefox</p>
+  <h1>Mishka-Linux</h1>
+  <p>Ubuntu-based live ISO with GNOME, Wine, Flatpak, and Firefox</p>
 </header>
 
 <main>
-    <h2>Download Mishka-Linux 1.0</h2>
-    <!-- Direct download button -->
-    <a href="https://archive.org/download/mishka-linux/mishka-linux.iso" 
-       download 
-       class="btn" 
-       id="download-btn">
-       Download ISO 
-    </a>
+  <section id="download" class="fade">
+    <h2>Download</h2>
+    <label for="version-select"><strong>Select version:</strong></label>
+    <select id="version-select">
+      <option value="1.0">Mishka-Linux 1.0 (Current)</option>
+      <option value="0.9">Mishka-Linux 0.9 (Legacy)</option>
+    </select>
+    <div id="release-info" style="margin-top:1rem;">
+      <p><strong>File:</strong> mishka-linux-1.0.iso</p>
+      <p><strong>Size:</strong> 2.6 GB</p>
+      <p><strong>SHA256:</strong> <code id="checksum">b3e9a7...c3a7</code> <button id="copy-checksum" class="btn">Copy</button></p>
+      <a href="https://archive.org/download/mishka-linux/mishka-linux.iso" download class="btn" id="download-btn">Download ISO</a>
+      <p id="download-count">Downloads: 0</p>
+    </div>
+  </section>
 
-    <h2>Instructions</h2>
+  <section id="requirements" class="fade">
+    <h3>System Requirements</h3>
     <ul>
-        <li>Write the ISO to a USB using Rufus (Windows) or <code>dd</code> (Linux/macOS).</li>
-        <li>Boot from USB and enjoy Mishka-Linux.</li>
-        <li>Default desktop environment: GNOME.</li>
+      <li>CPU: 64-bit dual-core processor</li>
+      <li>RAM: 4 GB minimum (8 GB recommended)</li>
+      <li>Storage: 20 GB free disk space</li>
+      <li>GPU: OpenGL 3.3+ compatible</li>
     </ul>
+  </section>
+
+  <section id="changelog" class="fade">
+    <h3>Changelog</h3>
+    <details open>
+      <summary>Version 1.0</summary>
+      <ul>
+        <li>Initial release based on Ubuntu 24.04 LTS</li>
+        <li>Preinstalled: Wine, Flatpak, Firefox, GNOME Tweaks</li>
+        <li>Improved boot performance and memory usage</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Version 0.9</summary>
+      <ul>
+        <li>Beta release for testers</li>
+        <li>Added initial Flatpak support</li>
+        <li>Minor desktop theme adjustments</li>
+      </ul>
+    </details>
+  </section>
+
+  <section id="faq" class="fade">
+    <h3>FAQ</h3>
+    <ul>
+      <li><strong>Can I install Mishka-Linux permanently?</strong><br>Yes, run the installer from the live session.</li>
+      <li><strong>Does it include proprietary drivers?</strong><br>No, only open-source drivers are included.</li>
+      <li><strong>How do I update?</strong><br>Run <code>sudo apt update && sudo apt upgrade</code>.</li>
+    </ul>
+  </section>
+
+  <section id="newsletter" class="fade">
+    <h3>Stay Updated</h3>
+    <p>Enter your email to get notified when a new version is released:</p>
+    <input type="email" id="email" placeholder="you@example.com">
+    <button class="btn" id="subscribe">Subscribe</button>
+    <p id="subscribe-msg"></p>
+  </section>
+
+  <section id="support" class="fade">
+    <h3>Support</h3>
+    <p>If you need help, contact us via the form below:</p>
+    <form id="support-form">
+      <input type="text" name="user_name" placeholder="Your Name" required>
+      <input type="email" name="user_email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+      <button type="submit" class="btn">Send Message</button>
+      <p id="support-msg"></p>
+    </form>
+  </section>
+
+  <section id="terminal-section" class="fade">
+    <h3>Interactive Terminal</h3>
+    <div id="terminal">
+      <div class="terminal-line"><span class="terminal-prompt">mishka@linux:~$</span><input type="text" id="term-input"></div>
+    </div>
+  </section>
+
 </main>
 
+<button id="back-to-top">Top</button>
+
 <footer>
-    &copy; 2025 Mishka-Linux. All rights reserved.
+  &copy; 2025 Mishka-Linux. All rights reserved.<br>
+  <div id="visit-count"></div>
+  <div id="last-updated"></div>
+  <br>
+  <button id="theme-toggle" class="btn">Toggle Theme</button>
 </footer>
 
-<!-- Auto-download script removed, user clicks button manually -->
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script>
+// ===== EmailJS =====
+emailjs.init('OZSAKK76bp9pvNAXE'); // Replace with your public key
+document.getElementById('support-form').addEventListener('submit', function(e){
+  e.preventDefault();
+  const msg = document.getElementById('support-msg');
+  msg.textContent = 'Sending...'; msg.style.color='lightblue';
+  emailjs.sendForm('service_ymm0gb8','template_8qen2sj', this)
+    .then(res=>{
+      msg.textContent='Message sent! We will contact you soon.';
+      msg.style.color='lightgreen';
+      this.reset();
+    })
+    .catch(err=>{
+      console.error(err);
+      msg.textContent='Failed to send message. Check console.';
+      msg.style.color='red';
+    });
+});
+
+// ===== Theme toggle =====
+const toggleBtn = document.getElementById('theme-toggle');
+if(localStorage.getItem('theme')==='light') document.body.classList.add('light');
+toggleBtn.textContent = document.body.classList.contains('light') ? 'Dark Mode' : 'Light Mode';
+toggleBtn.onclick = () => {
+  document.body.classList.toggle('light');
+  localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+  toggleBtn.textContent = document.body.classList.contains('light') ? 'Dark Mode' : 'Light Mode';
+};
+
+// ===== Version selector =====
+const versionSelect = document.getElementById('version-select');
+const releaseInfo = document.getElementById('release-info');
+const releases = {
+  "1.0": { file:"mishka-linux-1.0.iso", size:"2.6 GB", checksum:"b3e9a7...c3a7" },
+  "0.9": { file:"mishka-linux-0.9.iso", size:"2.4 GB", checksum:"a1f4c3...d9e7" }
+};
+versionSelect.addEventListener('change', ()=>{
+  const v = versionSelect.value;
+  releaseInfo.querySelector('p:nth-child(1)').innerHTML=`<strong>File:</strong> ${releases[v].file}`;
+  releaseInfo.querySelector('p:nth-child(2)').innerHTML=`<strong>Size:</strong> ${releases[v].size}`;
+  releaseInfo.querySelector('#checksum').textContent=releases[v].checksum;
+});
+
+// ===== Copy checksum =====
+document.getElementById('copy-checksum').onclick = ()=>{
+  navigator.clipboard.writeText(document.getElementById('checksum').textContent)
+  .then(()=>alert('Checksum copied to clipboard!'));
+};
+
+// ===== Newsletter =====
+document.getElementById('subscribe').onclick = ()=>{
+  const email = document.getElementById('email').value;
+  const msg = document.getElementById('subscribe-msg');
+  if(email){ msg.textContent = `Subscribed: ${email}`; msg.style.color='lightgreen'; } 
+  else { msg.textContent='Enter a valid email.'; msg.style.color='red'; }
+};
+
+// ===== Scroll & fade =====
+const fadeEls = document.querySelectorAll('.fade');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('show');});
+},{threshold:0.1});
+fadeEls.forEach(el=>observer.observe(el));
+
+const backTop = document.getElementById('back-to-top');
+window.addEventListener('scroll', ()=>backTop.classList.toggle('show', window.scrollY>300));
+backTop.onclick = ()=>window.scrollTo({top:0,behavior:'smooth'});
+
+// ===== Terminal =====
+const termInput = document.getElementById('term-input');
+const terminal = document.getElementById('terminal');
+termInput.addEventListener('keydown', e=>{
+  if(e.key==='Enter'){
+    const cmd = termInput.value.trim();
+    const line = document.createElement('div');
+    line.textContent = `mishka@linux:~$ ${cmd}`;
+    terminal.insertBefore(line, termInput.parentNode);
+    termInput.value='';
+    terminal.scrollTop=terminal.scrollHeight;
+    const output = document.createElement('div');
+    if(cmd==='help'){ output.textContent='Available: help, version, exit'; }
+    else if(cmd==='version'){ output.textContent='Mishka-Linux 1.0'; }
+    else if(cmd==='exit'){ output.textContent='Closing terminal...'; }
+    else{ output.textContent=`Command not found: ${cmd}`; }
+    terminal.insertBefore(output, termInput.parentNode);
+    terminal.scrollTop=terminal.scrollHeight;
+  }
+});
+
+// ===== Download counter =====
+let count = localStorage.getItem('downloadCount')||0;
+document.getElementById('download-count').textContent=`Downloads: ${count}`;
+document.getElementById('download-btn').onclick = ()=>{
+  count++; localStorage.setItem('downloadCount',count);
+  document.getElementById('download-count').textContent=`Downloads: ${count}`;
+};
+
+// ===== Visit & last updated =====
+let visits = localStorage.getItem('visitCount')||0; visits++;
+localStorage.setItem('visitCount',visits);
+document.getElementById('visit-count').textContent=`Visits: ${visits}`;
+document.getElementById('last-updated').textContent=`Last Updated: ${document.lastModified}`;
+
+</script>
 </body>
 </html>
 
