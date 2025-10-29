@@ -61,7 +61,8 @@ body.light a.btn, body.light button.btn{background:#4caf50;}
     <h2>Download</h2>
     <label for="version-select"><strong>Select version:</strong></label>
     <select id="version-select">
-      <option value="1.0">Mishka-Linux 1.1 (Current)</option>
+     <option value="1.2">Mishka-Linux 1.2 (Latest)</option>
+      <option value="1.0">Mishka-Linux 1.1 (Legacy)</option>
        <option value="1.0">Mishka-Linux 1.0 (Legacy)</option>
       <option value="0.9">Mishka-Linux 0.9 (Legacy)</option>
     </select>
@@ -84,33 +85,46 @@ body.light a.btn, body.light button.btn{background:#4caf50;}
     </ul>
   </section>
 
-  <section id="changelog" class="fade">
-    <h3>Changelog</h3>
-    <details open>
-      <summary>Version 1.1</summary>
-      <ul>
-        <li>Added KDE and Desktop enviroment Changer</li>
-        <li>Added Arch pakage manager (pacman)</li>
-        <li>Added VScode Preinstalled</li>
-      </ul>
-    </details>
-        <details>
-      <summary>Version 1.0</summary>
-      <ul>
-        <li>Initial release based on Ubuntu 24.04 LTS</li>
-        <li>Preinstalled: Wine, Flatpak, Firefox, GNOME Tweaks </li>
-        <li>Improved boot performance and memory usage </li>
-      </ul>
-    </details>
-    <details>
-      <summary>Version 0.9</summary>
-      <ul>
-        <li>Beta release for testers</li>
-        <li>Added initial Flatpak support</li>
-        <li>Minor desktop theme adjustments</li>
-      </ul>
-    </details>
-  </section>
+<section id="changelog" class="fade">
+  <h3>Changelog</h3>
+
+  <details open>
+    <summary>Version 1.2</summary>
+    <ul>
+      <li>Updated kernel to 7.0</li>
+      <li>Preinstalled Roblox, Minecraft, Fortnite</li>
+      <li>Improved live session performance</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Version 1.1</summary>
+    <ul>
+      <li>Added KDE and Desktop environment Changer</li>
+      <li>Added Arch package manager (pacman)</li>
+      <li>Added VSCode preinstalled</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Version 1.0</summary>
+    <ul>
+      <li>Initial release based on Ubuntu 24.04 LTS</li>
+      <li>Preinstalled: Wine, Flatpak, Firefox, GNOME Tweaks</li>
+      <li>Improved boot performance and memory usage</li>
+    </ul>
+  </details>
+
+  <details>
+    <summary>Version 0.9</summary>
+    <ul>
+      <li>Beta release for testers</li>
+      <li>Added initial Flatpak support</li>
+      <li>Minor desktop theme adjustments</li>
+    </ul>
+  </details>
+</section>
+
 
   <section id="faq" class="fade">
     <h3>FAQ</h3>
@@ -198,10 +212,12 @@ toggleBtn.onclick = () => {
 const versionSelect = document.getElementById('version-select');
 const releaseInfo = document.getElementById('release-info');
 const releases = {
-  "1.1": { file:"mishka-linux-1.1.iso", size:"2.6 GB", checksum:"7eeb9...6344" },
-  "1.0": { file:"mishka-linux-1.0.iso", size:"2.6 GB", checksum:"b3e9a7...c3a7" },
-  "0.9": { file:"mishka-linux-0.9.iso", size:"2.4 GB", checksum:"a1f4c3...d9e7" }
+    "1.2": {file:"mishka-linux-1.2.iso", size:"2.8 GB", checksum:"c8f2e1...91ab", link:"https://archive.org/download/mishka-linux/mishka-linux.iso"},
+    "1.1": {file:"mishka-linux-1.1.iso", size:"2.6 GB", checksum:"a7d3c9...44ef", link:"https://archive.org/download/mishka-linux/mishka-linux.iso"},
+    "1.0": {file:"mishka-linux-1.0.iso", size:"2.4 GB", checksum:"f3b8e7...99cd", link:"https://archive.org/download/mishka-linux/mishka-linux.iso"},
+    "0.9": {file:"mishka-linux-0.9.iso", size:"2.2 GB", checksum:"d1a7c4...22ab", link:"https://archive.org/download/mishka-linux/mishka-linux.iso"}
 };
+
 versionSelect.addEventListener('change', ()=>{
   const v = versionSelect.value;
   releaseInfo.querySelector('p:nth-child(1)').innerHTML=`<strong>File:</strong> ${releases[v].file}`;
@@ -234,31 +250,218 @@ const backTop = document.getElementById('back-to-top');
 window.addEventListener('scroll', ()=>backTop.classList.toggle('show', window.scrollY>300));
 backTop.onclick = ()=>window.scrollTo({top:0,behavior:'smooth'});
 
-// ===== Terminal =====
-const termInput = document.getElementById('term-input');
-const terminal = document.getElementById('terminal');
-termInput.addEventListener('keydown', e=>{
-  if(e.key==='Enter'){
-    const cmd = termInput.value.trim();
-    const line = document.createElement('div');
-    line.textContent = `mishka@linux:~$ ${cmd}`;
-    terminal.insertBefore(line, termInput.parentNode);
-    termInput.value='';
-    terminal.scrollTop=terminal.scrollHeight;
-    const output = document.createElement('div');
-    if(cmd==='help'){ output.textContent='Available: help, version, exit, ls, cd, mkdir testfile.txt, '; }
-    else if(cmd==='version'){ output.textContent='Mishka-Linux 1.1'; }
-    else if(cmd==='ls'){ output.textContent='Desktop Downloads Music Documents'; }
-    else if(cmd==='cd'){ output.textContent='ERROR:To Less Arguments'; }
-    else if(cmd==='cd Downloads'){ output.textContent='Nothing here yet Run mkdir to create a file'; }
-    else if(cmd==='mkdir'){ output.textContent='mkdir: missing operand'; }
-    else if(cmd==='mkdir testfile.txt'){ output.textContent='mkdir: Created file succesfully!'; }
-    else if(cmd==='exit'){ output.textContent='Closing terminal...'; }
-    else{ output.textContent=`Command not found: ${cmd}`; }
-    terminal.insertBefore(output, termInput.parentNode);
-    terminal.scrollTop=terminal.scrollHeight;
+// ===== Super Advanced Mishka-Linux Web Terminal =====
+const terminal = document.getElementById("terminal");
+const termInput = document.getElementById("term-input");
+let USER = "mishka";
+let HOST = "linux";
+let currentDir = "~";
+
+// === Persistent Fake Filesystem ===
+let fs = JSON.parse(localStorage.getItem("mishka_fs")) || {
+  "~": ["Desktop", "Documents", "Downloads", "Music"],
+  "Documents": ["readme.txt"],
+  "Downloads": [],
+  "Desktop": [],
+  "Music": []
+};
+
+// === Utility functions ===
+function saveFS() {
+  localStorage.setItem("mishka_fs", JSON.stringify(fs));
+}
+
+function printOutput(html, cls = "") {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  if (cls) div.classList.add(cls);
+  terminal.insertBefore(div, termInput.parentNode);
+  terminal.scrollTop = terminal.scrollHeight;
+}
+
+function parseCommand(input) {
+  const parts = input.split(/\s+/);
+  return { cmd: parts[0], args: parts.slice(1) };
+}
+
+function resolveDir(dir) {
+  return dir === "~" ? "~" : dir.replace("~/", "");
+}
+
+// === Command Execution ===
+function execute(input) {
+  if (!input.trim()) return;
+  const commands = input.split("&&").map(c => c.trim());
+  for (const c of commands) runCommand(c);
+}
+
+function runCommand(input) {
+  const { cmd, args } = parseCommand(input);
+  const prompt = `<span style="color:#0f0">${USER}@${HOST}</span>:<span style="color:#0ff">${currentDir}</span>$ ${input}`;
+  printOutput(prompt);
+
+  switch (cmd) {
+    case "help":
+      printOutput(
+        "Built-in commands:<br>" +
+        "<code>help, clear, ls, cd, pwd, mkdir, rmdir, touch, cat, echo, whoami, uname, date, uptime, df, free, ps, top, sudo, neofetch, ping, apt, man, exit, fortune</code>"
+      );
+      break;
+
+    case "clear":
+      Array.from(terminal.querySelectorAll("div:not(.terminal-line)")).forEach(el => el.remove());
+      break;
+
+    case "ls":
+      printOutput(fs[currentDir].join("  ") || "(empty)");
+      break;
+
+    case "cd":
+      if (!args[0]) currentDir = "~";
+      else if (args[0] === "..") currentDir = "~";
+      else if (fs[args[0]]) currentDir = args[0];
+      else if (fs[currentDir]?.includes(args[0])) currentDir = args[0];
+      else printOutput(`bash: cd: ${args[0]}: No such directory`);
+      break;
+
+    case "pwd":
+      printOutput(`/home/${USER}/${currentDir === "~" ? "" : currentDir}`);
+      break;
+
+    case "mkdir":
+      if (!args[0]) return printOutput("mkdir: missing operand");
+      if (!fs[currentDir].includes(args[0])) {
+        fs[currentDir].push(args[0]);
+        fs[args[0]] = [];
+        saveFS();
+        printOutput(`Directory '${args[0]}' created.`);
+      } else printOutput("mkdir: file exists");
+      break;
+
+    case "rmdir":
+      if (!args[0]) return printOutput("rmdir: missing operand");
+      if (fs[args[0]]) {
+        delete fs[args[0]];
+        fs[currentDir] = fs[currentDir].filter(f => f !== args[0]);
+        saveFS();
+        printOutput(`Removed directory '${args[0]}'`);
+      } else printOutput(`rmdir: ${args[0]}: No such directory`);
+      break;
+
+    case "touch":
+      if (!args[0]) return printOutput("touch: missing file operand");
+      if (!fs[currentDir].includes(args[0])) fs[currentDir].push(args[0]);
+      saveFS();
+      printOutput(`Created file '${args[0]}'`);
+      break;
+
+    case "cat":
+      if (!args[0]) return printOutput("cat: missing file operand");
+      if (fs[currentDir].includes(args[0]))
+        printOutput(`(contents of ${args[0]})`);
+      else printOutput(`cat: ${args[0]}: No such file`);
+      break;
+
+    case "echo":
+      printOutput(args.join(" ").replace(/\$USER/g, USER).replace(/\$PWD/g, currentDir));
+      break;
+
+    case "whoami":
+      printOutput(USER);
+      break;
+
+    case "uname":
+      printOutput("Mishka-Linux 1.1 x86_64 GNU/Linux");
+      break;
+
+    case "date":
+      printOutput(new Date().toString());
+      break;
+
+    case "uptime":
+      printOutput("up " + Math.floor(performance.now() / 1000) + " seconds, 1 user, load average: 0.00, 0.01, 0.05");
+      break;
+
+    case "df":
+      printOutput("Filesystem      Size  Used Avail Use% Mounted on<br>/dev/sda1        60G   20G   40G  33% /");
+      break;
+
+    case "free":
+      printOutput("              total        used        free<br>Mem:           8.0G        2.4G        5.6G");
+      break;
+
+    case "ps":
+      printOutput(" PID TTY          TIME CMD<br>  1  ?        00:00:00 init<br>  2  ?        00:00:00 bash<br>  3  ?        00:00:00 mishka-term");
+      break;
+
+    case "top":
+      printOutput("top - 00:00:00 up 0 min,  1 user,  load average: 0.00, 0.00, 0.00<br>Tasks: 3 total, 1 running, 2 sleeping, 0 stopped, 0 zombie");
+      break;
+
+    case "sudo":
+      printOutput("Nice try... you're already root");
+      break;
+
+    case "apt":
+      if (args[0] === "update") printOutput("Hit:1 https://mishka-linux.org/ stable InRelease<br>All packages are up to date.");
+      else if (args[0] === "upgrade") printOutput("Reading package lists... Done<br>Building dependency tree... Done<br>0 upgraded, 0 newly installed.");
+      else if (args[0] === "install") printOutput(`Installing ${args.slice(1).join(" ") || 'nothing'}... Done.`);
+      else printOutput("Usage: apt [update|upgrade|install pkg]");
+      break;
+
+    case "ping":
+      printOutput("PING google.com (8.8.8.8) 56(84) bytes of data.<br>64 bytes from 8.8.8.8: icmp_seq=1 ttl=57 time=20 ms<br>64 bytes from 8.8.8.8: icmp_seq=2 ttl=57 time=18 ms<br>--- google.com ping statistics ---<br>2 packets transmitted, 2 received, 0% packet loss");
+      break;
+
+    case "neofetch":
+      printOutput(`
+<pre style="color:#4caf50">
+    __  ____________ __  ____ __ ___         __    _____   ____  ___  __
+   /  |/  /  _/ ___// / / / //_//   |       / /   /  _/ | / / / / / |/ /
+  / /|_/ // / \__ \/ /_/ / ,<  / /| |______/ /    / //  |/ / / / /|   / 
+ / /  / // / ___/ / __  / /| |/ ___ /_____/ /____/ // /|  / /_/ //   |  
+/_/  /_/___//____/_/ /_/_/ |_/_/  |_|    /_____/___/_/ |_/\____//_/|_|   
+</pre>
+<b>Mishka-Linux 1.1</b> (Ubuntu-based)<br>
+Kernel: 6.8.0<br>
+Uptime: ${Math.floor(performance.now()/1000)}s<br>
+Shell: Mishka-Terminal v2.0
+`);
+      break;
+
+    case "fortune":
+      const fortunes = [
+        "Every exit is an entry somewhere else.",
+        "Linux is user-friendly; it’s just selective about who its friends are.",
+        "There’s no place like 127.0.0.1.",
+        "Keep calm and sudo rm -rf / (just kidding)."
+      ];
+      printOutput(fortunes[Math.floor(Math.random() * fortunes.length)]);
+      break;
+
+    case "man":
+      printOutput(`No manual entry for ${args[0] || "that"}`);
+      break;
+
+    case "exit":
+      printOutput("Terminal session closed. Refresh the page to restart.");
+      break;
+
+    default:
+      printOutput(`bash: ${cmd}: command not found`);
+  }
+
+  terminal.scrollTop = terminal.scrollHeight;
+}
+
+// === Handle Enter Key ===
+termInput.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    execute(termInput.value.trim());
+    termInput.value = "";
   }
 });
+
 
 // ===== Download counter =====
 let count = localStorage.getItem('downloadCount')||0;
