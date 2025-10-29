@@ -61,13 +61,14 @@ body.light a.btn, body.light button.btn{background:#4caf50;}
     <h2>Download</h2>
     <label for="version-select"><strong>Select version:</strong></label>
     <select id="version-select">
-      <option value="1.0">Mishka-Linux 1.0 (Current)</option>
+      <option value="1.0">Mishka-Linux 1.1 (Current)</option>
+       <option value="1.0">Mishka-Linux 1.0 (Legacy)</option>
       <option value="0.9">Mishka-Linux 0.9 (Legacy)</option>
     </select>
     <div id="release-info" style="margin-top:1rem;">
-      <p><strong>File:</strong> mishka-linux-1.0.iso</p>
-      <p><strong>Size:</strong> 2.6 GB</p>
-      <p><strong>SHA256:</strong> <code id="checksum">b3e9a7...c3a7</code> <button id="copy-checksum" class="btn">Copy</button></p>
+      <p><strong>File:</strong> mishka-linux-1.1.iso</p>
+      <p><strong>Size:</strong> 2.7 GB</p>
+      <p><strong>SHA256:</strong> <code id="checksum">g5d9c1...7d2q</code> <button id="copy-checksum" class="btn">Copy</button></p>
       <a href="https://archive.org/download/mishka-linux/mishka-linux.iso" download class="btn" id="download-btn">Download ISO</a>
       <p id="download-count">Downloads: 0</p>
     </div>
@@ -86,11 +87,19 @@ body.light a.btn, body.light button.btn{background:#4caf50;}
   <section id="changelog" class="fade">
     <h3>Changelog</h3>
     <details open>
+      <summary>Version 1.1</summary>
+      <ul>
+        <li>Added KDE and Desktop enviroment Changer</li>
+        <li>Added Arch pakage manager (pacman)</li>
+        <li>Added VScode Preinstalled</li>
+      </ul>
+    </details>
+        <details>
       <summary>Version 1.0</summary>
       <ul>
         <li>Initial release based on Ubuntu 24.04 LTS</li>
-        <li>Preinstalled: Wine, Flatpak, Firefox, GNOME Tweaks</li>
-        <li>Improved boot performance and memory usage</li>
+        <li>Preinstalled: Wine, Flatpak, Firefox, GNOME Tweaks </li>
+        <li>Improved boot performance and memory usage </li>
       </ul>
     </details>
     <details>
@@ -109,6 +118,7 @@ body.light a.btn, body.light button.btn{background:#4caf50;}
       <li><strong>Can I install Mishka-Linux permanently?</strong><br>Yes, run the installer from the live session.</li>
       <li><strong>Does it include proprietary drivers?</strong><br>No, only open-source drivers are included.</li>
       <li><strong>How do I update?</strong><br>Run <code>sudo apt update && sudo apt upgrade</code>.</li>
+      <li><strong>How do I install apps?</strong><br>Run <code>sudo apt install (app)</code>.</li>
     </ul>
   </section>
 
@@ -188,6 +198,7 @@ toggleBtn.onclick = () => {
 const versionSelect = document.getElementById('version-select');
 const releaseInfo = document.getElementById('release-info');
 const releases = {
+  "1.1": { file:"mishka-linux-1.1.iso", size:"2.6 GB", checksum:"7eeb9...6344" },
   "1.0": { file:"mishka-linux-1.0.iso", size:"2.6 GB", checksum:"b3e9a7...c3a7" },
   "0.9": { file:"mishka-linux-0.9.iso", size:"2.4 GB", checksum:"a1f4c3...d9e7" }
 };
@@ -235,8 +246,13 @@ termInput.addEventListener('keydown', e=>{
     termInput.value='';
     terminal.scrollTop=terminal.scrollHeight;
     const output = document.createElement('div');
-    if(cmd==='help'){ output.textContent='Available: help, version, exit'; }
-    else if(cmd==='version'){ output.textContent='Mishka-Linux 1.0'; }
+    if(cmd==='help'){ output.textContent='Available: help, version, exit, ls, cd, mkdir testfile.txt, '; }
+    else if(cmd==='version'){ output.textContent='Mishka-Linux 1.1'; }
+    else if(cmd==='ls'){ output.textContent='Desktop Downloads Music Documents'; }
+    else if(cmd==='cd'){ output.textContent='ERROR:To Less Arguments'; }
+    else if(cmd==='cd Downloads'){ output.textContent='Nothing here yet Run mkdir to create a file'; }
+    else if(cmd==='mkdir'){ output.textContent='mkdir: missing operand'; }
+    else if(cmd==='mkdir testfile.txt'){ output.textContent='mkdir: Created file succesfully!'; }
     else if(cmd==='exit'){ output.textContent='Closing terminal...'; }
     else{ output.textContent=`Command not found: ${cmd}`; }
     terminal.insertBefore(output, termInput.parentNode);
